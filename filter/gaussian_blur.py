@@ -1,15 +1,19 @@
 import cv2
 import numpy
 
-def blur(le_lien):
+def blur(le_lien,ksize1,ksize2):
 
     src = cv2.imread(f'./img/{le_lien}', cv2.IMREAD_UNCHANGED)
 
     if not le_lien.endswith('.jpg' or '.png'):
         print("Is not a jpg or a png")
+
+    if  (ksize1 and ksize2 %2) == 0 or ksize1 and ksize2 < 0:
+        print("The configuration of blur is invalid")
+
     else:
-        ksize1 = 9
-        ksize2 = 9
+        # ksize1 = 9
+        # ksize2 = 9
         try:
             dst = cv2.GaussianBlur(src, (ksize1, ksize2), cv2.BORDER_DEFAULT)
 

@@ -13,9 +13,7 @@ def dilatation(le_lien):
             kernel = np.ones((5, 5), 'uint8')
 
             dilate_img = cv2.dilate(img, kernel, iterations=1)
-            cv2.imshow('Dilated Image', dilate_img)
-            cv2.waitKey(3000)
-            cv2.destroyAllWindows()
+
         except cv2.error as e:
             print("Image not found")
 

@@ -4,8 +4,8 @@ from filter.gaussian_blur import blur
 from filter.grayscale import gray
 
 
-gray('juan.jpg')
+# gray('juan.jpg')
 
 # dilatation('juan.jpg')
 
-# blur('juan.jpg')
+blur('juan.jpg',9,9)
