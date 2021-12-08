@@ -3,7 +3,7 @@ import numpy
 
 def blur(le_lien):
 
-    src = cv2.imread('./img/juan.jpg', cv2.IMREAD_UNCHANGED)
+    src = cv2.imread(f'./img/{le_lien}', cv2.IMREAD_UNCHANGED)
 
     if not le_lien.endswith('.jpg' or '.png'):
         print("Is not a jpg or a png")
@@ -21,7 +21,7 @@ def blur(le_lien):
             print("Image not found")
 
         try:
-            result = cv2.imwrite(r'./img/output/blurJuan.jpg', dst)
+            result = cv2.imwrite(r'./output/blur_juan.jpg', dst)
             if result:
                 print("File saved successfully")
             else:

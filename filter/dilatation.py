@@ -20,7 +20,7 @@ def dilatation(le_lien):
             print("Image not found")
 
         try:
-            result = cv2.imwrite(r'./img/output/blurJuan.jpg', dilate_img)
+            result = cv2.imwrite(r'./output/dilated_juan.jpg', dilate_img)
             if result:
                 print("File saved successfully")
             else:

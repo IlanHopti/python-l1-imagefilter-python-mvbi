@@ -4,7 +4,7 @@ import cv2
 def gray(le_lien):
 
     try:
-        image = cv2.imread('img/juan.jpg')
+        image = cv2.imread(f'./img/{le_lien}')
         if not le_lien.endswith('.jpg' or '.png'):
             print("Is not a jpg or a png")
         else:
@@ -19,11 +19,11 @@ def gray(le_lien):
     except cv2.error as e:
         print("Image not found")
 
-        try:
-            result = cv2.imwrite(r'./output/grayJuan.jpg', gray)
-            if result:
-                print("File saved successfully")
-            else:
-                print("Error in saving file")
-        except NameError as n:
-            print("Wrong directory")
+    try:
+        result = cv2.imwrite(r'./output/grayJuan.jpg', gray)
+        if result:
+            print("File saved successfully")
+        else:
+            print("Error in saving file")
+    except NameError as n:
+        print("Wrong directory")
