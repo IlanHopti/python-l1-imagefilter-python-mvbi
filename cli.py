@@ -23,9 +23,23 @@ def Start():
             else:
                 img_path = f'{input_dir}/{img}'
                 image = cv2.imread(img_path)
-                image = Gray(image)
-                image = Dilatation(image)
-                image = Blur(image)
+                # image = Gray(image)
+                # image = Dilatation(image)
+                # image = Blur(image)
+
+                if "blur" in arguments:
+                    print("ya blur")
+                    image = Blur(image, (arguments["blur"], arguments["blur"]))
+
+                if "grayscale" in arguments:
+                    print("ya grayscale")
+                    image = Gray(image)
+
+                if "dilatation" in arguments:
+                    print("ya dilatation")
+                    image = Dilatation(image)
+
+
 
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
@@ -61,8 +75,10 @@ for i, a in enumerate(args):
         for param in params:
             param = param.split(':')
 
-            arguments[param[0]] = int(param[1])
-
+            if param[0] == "grayscale":
+                arguments[param[0]]=0
+            else:
+                arguments[param[0]] = int(param[1])
             print(arguments)
 
 

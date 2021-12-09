@@ -1,16 +1,14 @@
 import cv2
 
-def Blur(image):
-    ksize1 = 9
-    ksize2 = 9
+def Blur(image, kernel_size):
 
-    if  (ksize1 and ksize2 % 2) == 0 or ksize1 and ksize2 < 0:
+    if  (kernel_size[0] % 2) == 0 and (kernel_size[1] % 2) == 0:
         print("The configuration of blur is invalid")
 
     else:
 
         try:
-            dst = cv2.GaussianBlur(image, (ksize1, ksize2), cv2.BORDER_DEFAULT)
+            dst = cv2.GaussianBlur(image, kernel_size, cv2.BORDER_DEFAULT)
             return dst
 
         except cv2.error as e:
