@@ -39,7 +39,7 @@ def Start():
                     print("ya dilate")
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
 
-                image = cv2.putText(image, 'Emmanuel Macron', org=(50, 50), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=3)
+                image = cv2.putText(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian', org=(50, 50), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35, color=(0, 0, 255), thickness=1)
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
                 # print(" Image successfully uploaded")
