@@ -1,34 +1,18 @@
 import cv2
-import numpy
 
-def blur(le_lien,ksize1,ksize2):
+def Blur(image):
+    ksize1 = 9
+    ksize2 = 9
 
-    src = cv2.imread(f'./img/{le_lien}', cv2.IMREAD_UNCHANGED)
-
-    if not le_lien.endswith('.jpg' or '.png'):
-        print("Is not a jpg or a png")
-
-    if  (ksize1 and ksize2 %2) == 0 or ksize1 and ksize2 < 0:
+    if  (ksize1 and ksize2 % 2) == 0 or ksize1 and ksize2 < 0:
         print("The configuration of blur is invalid")
 
     else:
-        # ksize1 = 9
-        # ksize2 = 9
+
         try:
-            dst = cv2.GaussianBlur(src, (ksize1, ksize2), cv2.BORDER_DEFAULT)
+            dst = cv2.GaussianBlur(image, (ksize1, ksize2), cv2.BORDER_DEFAULT)
+            return dst
 
-            cv2.imshow("Gaussian Smoothing", numpy.hstack((src, dst)))
-
-            cv2.waitKey(3000)
-            cv2.destroyAllWindows()
         except cv2.error as e:
             print("Image not found")
-
-        try:
-            result = cv2.imwrite(r'./output/blur_juan.jpg', dst)
-            if result:
-                print("File saved successfully")
-            else:
-                print("Error in saving file")
-        except NameError as n:
-            print("Wrong directory")
+            return None
