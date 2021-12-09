@@ -2,9 +2,9 @@ import numpy as np
 import cv2
 
 
-def Dilatation(image):
+def Dilate(image, size):
     try:
-        kernel = np.ones((5, 5), 'uint8')
+        kernel = np.ones(size, 'uint8')
 
         dilate_img = cv2.dilate(image, kernel, iterations=1)
         return dilate_img

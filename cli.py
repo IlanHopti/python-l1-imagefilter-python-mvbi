@@ -1,7 +1,7 @@
 import sys
 from _ast import arguments
 
-from filter.dilatation import Dilatation
+from filter.dilatation import Dilate
 from filter.gaussian_blur import Blur
 from filter.grayscale import Gray
 import cv2
@@ -35,9 +35,9 @@ def Start():
                     print("ya grayscale")
                     image = Gray(image)
 
-                if "dilatation" in arguments:
-                    print("ya dilatation")
-                    image = Dilatation(image)
+                if "dilate" in arguments:
+                    print("ya dilate")
+                    image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
 
 
 
