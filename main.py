@@ -1,3 +1,4 @@
+
 from filter.dilatation import Dilatation
 from filter.gaussian_blur import Blur
 from filter.grayscale import Gray
