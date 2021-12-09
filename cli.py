@@ -8,13 +8,13 @@ import cv2
 import os
 
 
-arguments = {
-    # "filter": "",
-}
+arguments = {}
 
-# arguments["filter"] = 1
 
 def Start():
+    """
+    Start the program
+    """
     list = os.listdir("img")
     try:
         for img in list:
