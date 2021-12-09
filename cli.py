@@ -18,7 +18,7 @@ def Start():
     list = os.listdir("img")
     try:
         for img in list:
-            if not img.endswith('.jpg' or '.png'):
+            if not img.endswith(('.jpg', '.png', '.jpeg')):
                 print("Is not a jpg or a png")
             else:
                 img_path = f'{input_dir}/{img}'
@@ -30,7 +30,9 @@ def Start():
                 if "blur" in arguments:
                     print("ya blur")
                     image = Blur(image, (arguments["blur"], arguments["blur"]))
-
+                    if image is None:
+                        print("The configuration of blur is invalid")
+                        break
                 if "grayscale" in arguments:
                     print("ya grayscale")
                     image = Gray(image)
@@ -78,7 +80,7 @@ for i, a in enumerate(args):
                 arguments[param[0]]=0
             else:
                 arguments[param[0]] = int(param[1])
-            print(arguments)
+            # print(arguments)
 
 
 
