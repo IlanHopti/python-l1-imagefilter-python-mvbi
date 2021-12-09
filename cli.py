@@ -1,4 +1,5 @@
 import sys
+from _ast import arguments
 
 from filter.dilatation import Dilatation
 from filter.gaussian_blur import Blur
@@ -7,23 +8,32 @@ import cv2
 import os
 
 
+arguments = {
+    # "filter": "",
+}
+
+# arguments["filter"] = 1
+
 def Start():
     list = os.listdir("img")
+    try:
+        for img in list:
+            if not img.endswith('.jpg' or '.png'):
+                print("Is not a jpg or a png")
+            else:
+                img_path = f'{input_dir}/{img}'
+                image = cv2.imread(img_path)
+                image = Gray(image)
+                image = Dilatation(image)
+                image = Blur(image)
 
-    for img in list:
-        if not img.endswith('.jpg' or '.png'):
-            print("Is not a jpg or a png")
-        else:
-            img_path = f'{input_dir}/{img}'
-            image = cv2.imread(img_path)
-            image = Gray(image)
-            image = Dilatation(image)
-            image = Blur(image)
+                output = f'{output_dir}/{img}'
+                cv2.imwrite(output, image)
+                # print(" Image successfully uploaded")
+    except NameError:
+        print('Input or output directory not found')
 
-            output = f'{output_dir}/{img}'
-            cv2.imwrite(output, image)
 
-            print(" Image successfully uploaded")
 
 args = sys.argv
 
@@ -45,8 +55,22 @@ for i, a in enumerate(args):
         # mettre output_dir dans le fichier output du main
         print(output_dir)
 
+    elif a == '--filter':
+        params = args[i + 1].split('|')
+
+        for param in params:
+            param = param.split(':')
+
+            arguments[param[0]] = int(param[1])
+
+            print(arguments)
+
+
+
     elif a == '-s' or a == '--start':
         Start()
+
+
 
 
 
