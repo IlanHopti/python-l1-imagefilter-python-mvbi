@@ -1,11 +1,24 @@
-import filter
-from filter.dilatation import dilatation
-from filter.gaussian_blur import blur
-from filter.grayscale import gray
+from filter.dilatation import Dilatation
+from filter.gaussian_blur import Blur
+from filter.grayscale import Gray
+import cv2
+import os
 
 
-# gray('juan.jpg')
+list = os.listdir("img")
 
-# dilatation('juan.jpg')
 
-blur('juan.jpg',9,9)
+for img in list:
+    if not img.endswith('.jpg' or '.png'):
+        print("Is not a jpg or a png")
+    else:
+        img_path = f'img/{img}'
+        image = cv2.imread(img_path)
+        image = Gray(image)
+        image = Dilatation(image)
+        image = Blur(image)
+
+        output = f'output/{img}'
+        cv2.imwrite(output, image)
+
+        print(" Image successfully uploaded")
