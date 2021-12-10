@@ -1,3 +1,4 @@
+import configparser
 import inspect
 import sys
 from _ast import arguments
@@ -112,6 +113,18 @@ for i, a in enumerate(args):
         logger.log("Convert video to frames")
     #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4"
 
+    elif a == '--config-file':
+        configuration = configparser.ConfigParser()
+        config = args[i + 1]
+        configuration.read(config)
+
+        input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
+        output_dir = configuration["DEFAULT_CONFIG"]["outputdir"]
+        filters = configuration["DEFAULT_CONFIG"]["filters"]
+
+        logger.log(f"Set input to {input_dir}")
+        logger.log(f"Set output to {output_dir}")
+        logger.log(f"Set filters to {filters}")
 
     elif a == '--filter': # To chose your filters
         params = args[i + 1].split('|')
