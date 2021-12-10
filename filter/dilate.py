@@ -10,16 +10,20 @@ def Dilate(image, size):
     :param size: dilate size
     :return: returns the dilated image, if the image is not found, returns None.
     """
-    try:
-        kernel = np.ones(size, 'uint8')
 
-        dilate_img = cv2.dilate(image, kernel, iterations=1)
-        return dilate_img
+    if size[0] <= 0 and size[0] <= 0:
+        print("Blur value is not odd ")
+    else:
 
-    except cv2.error:
-        print("Image not found")
-        logger.log("Image not found")
+        try:
+            kernel = np.ones(size, 'uint8')
+            dilate_img = cv2.dilate(image, kernel, iterations=1)
+            return dilate_img
 
-        return None
+        except cv2.error:
+            print("Image not found")
+            logger.log("Image not found")
+
+            return None
 
 

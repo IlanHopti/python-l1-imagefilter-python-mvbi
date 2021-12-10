@@ -30,6 +30,8 @@ def Start():
         for img in list:
             if not img.endswith(('.jpg', '.png', '.jpeg')):
                 print(f"{img} is not a jpg, a png or a jpeg file")
+                logger.log(f"{img} is not a jpg, a png or a jpeg file")
+
             else:
                 img_path = f'{input_dir}/{img}'
                 image = cv2.imread(img_path)
@@ -37,8 +39,10 @@ def Start():
                 if "blur" in arguments:
                     image = Blur(image, (arguments["blur"], arguments["blur"]))
                     if image is None:
+                        logger.log("Blur value is not odd ")
                         break
                     logger.log("Application of Blur filter ")
+
 
                 if "grayscale" in arguments:
                     logger.log("Application of Grayscale filter")
@@ -47,6 +51,9 @@ def Start():
 
                 if "dilate" in arguments:
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
+                    if image is None:
+                        logger.log("Blur value is not odd ")
+                        break
                     logger.log("Application of dilatation filter")
 
 
@@ -63,7 +70,9 @@ def Start():
         print('Input or output directory not found')
         logger.log("Input or output directory not found")
 
+
 args = sys.argv
+
 
 for i, a in enumerate(args):
     """
@@ -76,7 +85,6 @@ for i, a in enumerate(args):
     if he requested a filter that doesn't exist, print an error message
     if he requested a filter that exists, save the filter in the dictionary
     if he requested s or start, start the function "Start"
-    
     """
 
     if a == '-h' or a == '--help':
@@ -85,38 +93,36 @@ for i, a in enumerate(args):
               "-i, --input-dir <directory>  : To set your directory where your images are \n"
               "-o, --output-dir <directory> : To set your directory where your modified images will be saved \n"
               "--gif                        : To convert your images to a gif \n"
-              "--frame                      : To convert a video into a frame \n"
+              "--frame <--video=video-name> : To convert a video into a frame \n"
               "--list-filters               : To show the list of available filters \n"
               "--filter <\"parameter\">       : To chose your filters \n"
               "-s, --start                  : To run the function which add your selected filters on your images \n")
 
 
     elif a == '-i' or a == '--input-dir':
-        input_dir = args[i + 1]
         # Initialized input directory
+        input_dir = args[i + 1]
+        logger.log(f"Set input to {input_dir}")
+
 
     elif a == '-o' or a == '--output-dir':
-        output_dir = args[i + 1]
         # Initialized output directory
+        output_dir = args[i + 1]
+        logger.log(f"Set output to {output_dir}")
 
-    # elif a == '--config-file':
-    #     configuration = configparser.ConfigParser()
-    #     config = args[i + 1]
-    #     configuration.read(config)
-    #
-    #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
-    #     print(configuration)
 
     elif a == '--gif':
         Gif()
         logger.log("Convert images to gif")
+
 
     elif a == "--frame":
         params = args[i + 1].split('=')
         arguments[params[0]] = params[1]
         VideoCapture(params[1])
         logger.log("Convert video to frames")
-    #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4" -sv
+    #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4"
+
 
     elif a == '--filter':
         params = args[i + 1].split('|')
@@ -130,6 +136,7 @@ for i, a in enumerate(args):
             else:
                 arguments[param[0]] = int(param[1])
     #   commande  exemple: python cli.py -i img/ -o output/ --filter "blur:9|grayscale" -s
+
 
     elif a == '--list-filters':
         print("Available filters:")
