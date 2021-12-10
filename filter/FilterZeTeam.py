@@ -6,6 +6,12 @@ from matplotlib import colors
 liste = os.listdir('./img')
 
 def color_text(img,txt):
+    """
+    Colorize text on image
+    :param img:  image to colorize
+    :param txt:  text to colorize
+    :return:  colored text
+    """
 
     color = colors.to_hex('blue')
     colorText = ImageColor.getcolor(color, 'RGB')

@@ -1,6 +1,11 @@
 import cv2
 
 def VideoCapture(video):
+  """
+  Capture every frame from a video file
+  :param video:  Video file to capture
+  """
+  
   vidcap = cv2.VideoCapture(f'video/{video}')
   success, image = vidcap.read()
   count = 0

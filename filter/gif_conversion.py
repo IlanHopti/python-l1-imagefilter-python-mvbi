@@ -3,6 +3,9 @@ from PIL import Image
 
 
 def Gif():
+    """
+    Convert all .png files in the current directory to .gif file.:
+    """
     frames = []
     imgs = glob.glob("gif_input/*.jpg")
     for i in imgs:
