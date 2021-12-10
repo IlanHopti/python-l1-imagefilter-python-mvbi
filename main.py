@@ -1,5 +1,5 @@
-from filter.dilatation import Dilate
-from filter.gaussian_blur import Blur
+from filter.dilate import Dilate
+from filter.blur import Blur
 from filter.grayscale import Gray
 # import logger
 #

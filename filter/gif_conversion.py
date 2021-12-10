@@ -1,6 +1,7 @@
 import glob
 from PIL import Image
 
+
 def Gif():
     frames = []
     imgs = glob.glob("gif_input/*.jpg")
