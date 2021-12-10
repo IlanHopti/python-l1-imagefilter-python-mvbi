@@ -4,8 +4,8 @@ from _ast import arguments
 
 import filter
 
-from filter.dilatation import Dilate
-from filter.gaussian_blur import Blur
+from filter.dilate import Dilate
+from filter.blur import Blur
 from filter.grayscale import Gray
 from filter.video_capture import VideoCapture
 import cv2
