@@ -1,13 +1,14 @@
 import inspect
 import sys
 from _ast import arguments
-
 import filter
-
 from filter.dilate import Dilate
 from filter.blur import Blur
 from filter.grayscale import Gray
+from filter.gif_conversion import Gif
 from filter.video_capture import VideoCapture
+
+import configparser
 import cv2
 import os
 import logger
@@ -97,10 +98,23 @@ for i, a in enumerate(args):
         # mettre output_dir dans le fichier output du main
         print(output_dir)
 
+    # elif a == '--config-file':
+    #     configuration = configparser.ConfigParser()
+    #     config = args[i + 1]
+    #     configuration.read(config)
+    #
+    #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
+    #     print(configuration)
+
+    elif a == '-gif':
+        Gif()
+        logger.log("Convert images to gif")
+
     elif a == "--frame":
         params = args[i + 1].split('=')
         arguments[params[0]] = params[1]
         VideoCapture(params[1])
+        logger.log("Convert video to frames")
     #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4" -sv
 
     elif a == '--filter':
