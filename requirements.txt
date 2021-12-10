@@ -5,3 +5,4 @@ pycparser==2.21
 
 Pillow~=8.4.0
 matplotlib~=3.5.0
+

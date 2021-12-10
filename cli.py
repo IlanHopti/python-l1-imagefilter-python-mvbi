@@ -1,65 +1,103 @@
+import inspect
 import sys
 from _ast import arguments
-
-from filter.dilatation import Dilate
-from filter.gaussian_blur import Blur
+import filter
+from filter.dilate import Dilate
+from filter.blur import Blur
 from filter.grayscale import Gray
+from filter.gif_conversion import Gif
+from filter.video_capture import VideoCapture
+
+import configparser
 import cv2
 import os
+
 from color_text import color_text
 
+import logger
 
-arguments = {
-    # "filter": "",
-}
 
-# arguments["filter"] = 1
+arguments = {}
 
 def Start():
+    """
+    Start the program
+    If it's not a .jpg a .png or a .jpeg file stop the program
+    else it will start the program
+    search for filters in arguments and apply them
+    save the processed image in the output file
+
+    """
     list = os.listdir("img")
     try:
         for img in list:
-            if not img.endswith('.jpg' or '.png'):
-                print("Is not a jpg or a png")
+            if not img.endswith(('.jpg', '.png', '.jpeg')):
+                print(f"{img} is not a jpg, a png or a jpeg file")
             else:
                 img_path = f'{input_dir}/{img}'
                 image = cv2.imread(img_path)
-                # image = Gray(image)
-                # image = Dilatation(image)
-                # image = Blur(image)
 
                 if "blur" in arguments:
-                    print("ya blur")
                     image = Blur(image, (arguments["blur"], arguments["blur"]))
+                    if image is None:
+                        break
+                    logger.log("Application of Blur filter ")
 
                 if "grayscale" in arguments:
-                    print("ya grayscale")
+                    logger.log("Application of Grayscale filter")
                     image = Gray(image)
 
+
                 if "dilate" in arguments:
-                    print("ya dilate")
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
+                    logger.log("Application of dilatation filter")
+
+
+                if "FilterZeTeam" in arguments:
+                    image = cv2.putText(image, "Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian",
+                                        org=(10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35,
+                                        color=(0, 0, 255), thickness=1)
+                    logger.log("Application of FilterZeTeam ")
+
+
 
                 if "ColorText" in arguments:
                     image = color_text(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian')
 
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
-                # print(" Image successfully uploaded")
+                logger.log("Image successfully saved to " + output_dir)
     except NameError:
         print('Input or output directory not found')
-
 
 
 args = sys.argv
 
 for i, a in enumerate(args):
+    """
+    when help is requested, print the help message
+    when i is requested, print the input directory
+    when o is requested, print the output directory
+    when f is requested, print the filters available   
+    the user can choose the filters he wants to apply
+    and can parameterize them
+    if he requested a filter that doesn't exist, print an error message
+    if he requested a filter that exists, save the filter in the dictionary
+    if he requested s or start, start the function "Start"
+    
+    """
 
     if a == '-h' or a == '--help':
-        print("usage: imagefilter\n"
-              "-h, --help :\n"
-              "-i,--input-dir <directory>\n"
-              "-o,--output-dir <directory>\n")
+        print("Usage: imagefilter -->\n"
+              "-h, --help                   : To show all commands \n"
+              "-i, --input-dir <directory>  : To set your directory where your images are \n"
+              "-o, --output-dir <directory> : To set your directory where your modified images will be saved \n"
+              "--gif                        : To convert your images to a gif \n"
+              "--frame                      : To convert a video into a frame \n"
+              "--list-filters               : To show the list of available filters \n"
+              "--filter <\"parameter\">       : To chose your filters \n"
+              "-s, --start                  : To run the function which add your selected filters on your images \n")
+
 
     elif a == '-i' or a == '--input-dir':
         input_dir = args[i + 1]
@@ -71,25 +109,48 @@ for i, a in enumerate(args):
         # mettre output_dir dans le fichier output du main
         print(output_dir)
 
+    # elif a == '--config-file':
+    #     configuration = configparser.ConfigParser()
+    #     config = args[i + 1]
+    #     configuration.read(config)
+    #
+    #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
+    #     print(configuration)
+
+    elif a == '--gif':
+        Gif()
+        logger.log("Convert images to gif")
+
+    elif a == "--frame":
+        params = args[i + 1].split('=')
+        arguments[params[0]] = params[1]
+        VideoCapture(params[1])
+        logger.log("Convert video to frames")
+    #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4" -sv
+
     elif a == '--filter':
         params = args[i + 1].split('|')
 
         for param in params:
             param = param.split(':')
 
-            if param[0] == "grayscale":
-                arguments[param[0]]=0
-            elif param[0] == "ColorText":
+            if param[0] == "grayscale" or param[0] == "FilterZeTeam":
                 arguments[param[0]] = 0
+
             else:
                 arguments[param[0]] = int(param[1])
-            print(arguments)
+    #   commande  exemple: python cli.py -i img/ -o output/ --filter "blur:9|grayscale" -s
+
+    elif a == '--list-filters':
+        print("Available filters:")
+        function_list = inspect.getmembers(filter, inspect.ismodule)
+        for sublist in function_list:
+            # print(sublist[0])
+            if sublist[0] == 'blur': print(sublist[0] + " : Add a blurred filter to your images, value need to be odd and <0")
+            elif sublist[0] == 'dilate': print(sublist[0] + " : Add a dilated filter to your images")
+            elif sublist[0] == 'grayscale': print(sublist[0] + " : Add a black and white filtered filter to your images")
+            # elif sublist[0] == 'dilate': print(sublist[0] + " test2")
+
 
     elif a == '-s' or a == '--start':
         Start()
-
-
-
-
-
-

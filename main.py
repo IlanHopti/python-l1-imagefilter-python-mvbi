@@ -1,7 +1,9 @@
-
-from filter.dilatation import Dilate
-from filter.gaussian_blur import Blur
+from filter.dilate import Dilate
+from filter.blur import Blur
 from filter.grayscale import Gray
+# import logger
+#
+#  logger.log("Applied filter")
 # import cv2
 # import os
 #
@@ -23,3 +25,5 @@ from filter.grayscale import Gray
 #         cv2.imwrite(output, image)
 #
 #         print(" Image successfully uploaded")
+
+
