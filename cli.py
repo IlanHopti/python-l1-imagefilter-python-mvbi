@@ -6,6 +6,7 @@ from filter.gaussian_blur import Blur
 from filter.grayscale import Gray
 import cv2
 import os
+from color_text import color_text
 
 
 arguments = {
@@ -39,7 +40,9 @@ def Start():
                     print("ya dilate")
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
 
-                image = cv2.putText(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian', org=(50, 50), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35, color=(0, 0, 255), thickness=1)
+                if "ColorText" in arguments:
+                    image = color_text(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian')
+
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
                 # print(" Image successfully uploaded")
@@ -76,11 +79,11 @@ for i, a in enumerate(args):
 
             if param[0] == "grayscale":
                 arguments[param[0]]=0
+            elif param[0] == "ColorText":
+                arguments[param[0]] = 0
             else:
                 arguments[param[0]] = int(param[1])
             print(arguments)
-
-
 
     elif a == '-s' or a == '--start':
         Start()
