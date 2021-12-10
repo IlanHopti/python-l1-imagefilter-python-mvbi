@@ -61,6 +61,7 @@ for i, a in enumerate(args):
     when help is requested, print the help message
     when i is requested, print the input directory
     when o is requested, print the output directory
+    when f is requested, print the filters available   
     the user can choose the filters he wants to apply
     and can parameterize them
     if he requested a filter that doesn't exist, print an error message
