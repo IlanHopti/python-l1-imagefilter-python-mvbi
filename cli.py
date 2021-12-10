@@ -2,6 +2,7 @@ import sys
 from _ast import arguments
 from filter.dilatation import Dilate
 from filter.gaussian_blur import Blur
+from filter.gif_conversion import Gif
 from filter.grayscale import Gray
 from filter.video_capture import VideoCapture
 import configparser
@@ -80,11 +81,15 @@ for i, a in enumerate(args):
     #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
     #     print(configuration)
 
+    elif a == '-gif':
+        Gif()
+        logger.log("Convert images to gif")
 
     elif a == "--frame":
         params = args[i + 1].split('=')
         arguments[params[0]] = params[1]
         VideoCapture(params[1])
+        logger.log("Convert video to frames")
     #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4" -sv
 
     elif a == '--filter':
