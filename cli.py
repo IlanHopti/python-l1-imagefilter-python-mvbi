@@ -1,11 +1,60 @@
 import sys
-import main
+from _ast import arguments
+
+from filter.dilatation import Dilate
+from filter.gaussian_blur import Blur
+from filter.grayscale import Gray
+import cv2
+import os
+
+
+arguments = {}
+
+
+def Start():
+    list = os.listdir("img")
+    try:
+        for img in list:
+            if not img.endswith(('.jpg', '.png', '.jpeg')):
+                print("Is not a jpg or a png")
+            else:
+                img_path = f'{input_dir}/{img}'
+                image = cv2.imread(img_path)
+
+                if "blur" in arguments:
+                    image = Blur(image, (arguments["blur"], arguments["blur"]))
+                    if image is None:
+                        # print("Blur value is not odd ")
+                        break
+                    print("Blur applied ")
+
+                if "grayscale" in arguments:
+                    print("Grayscale applied ")
+                    image = Gray(image)
+
+                if "dilate" in arguments:
+                    print("Dilate applied ")
+                    image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
+
+                if "FilterZeTeam" in arguments:
+                    print("FilterZeTeam applied ")
+                    image = cv2.putText(image, "Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian",
+                                        org=(10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35,
+                                        color=(0, 0, 255), thickness=1)
+
+                output = f'{output_dir}/{img}'
+                cv2.imwrite(output, image)
+                # print(" Image successfully uploaded")
+    except NameError:
+        print('Input or output directory not found')
+
+
 
 args = sys.argv
 
 for i, a in enumerate(args):
 
-    if a == '-h'or a == '--help':
+    if a == '-h' or a == '--help':
         print("usage: imagefilter\n"
               "-h, --help :\n"
               "-i,--input-dir <directory>\n"
@@ -13,10 +62,35 @@ for i, a in enumerate(args):
 
     elif a == '-i' or a == '--input-dir':
         input_dir = args[i + 1]
-        #mettre input_dir dans img du main
+        # mettre input_dir dans img du main
         print(input_dir)
 
     elif a == '-o' or a == '--output-dir':
         output_dir = args[i + 1]
-        #mettre output_dir dans le fichier output du main
+        # mettre output_dir dans le fichier output du main
         print(output_dir)
+
+    elif a == '--filter':
+        params = args[i + 1].split('|')
+
+        for param in params:
+            param = param.split(':')
+
+            if param[0] == "grayscale" or param[0] == "FilterZeTeam" :
+                arguments[param[0]] = 0
+
+            else:
+                arguments[param[0]] = int(param[1])
+            # print(arguments)
+
+
+
+
+    elif a == '-s' or a == '--start':
+        Start()
+
+
+
+
+
+

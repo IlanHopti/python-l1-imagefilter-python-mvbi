@@ -3,9 +3,9 @@ import cv2
 import logger
 
 
-def Dilatation(image):
+def Dilate(image, size):
     try:
-        kernel = np.ones((5, 5), 'uint8')
+        kernel = np.ones(size, 'uint8')
 
         dilate_img = cv2.dilate(image, kernel, iterations=1)
         logger.log("Application of dilatation filter")
