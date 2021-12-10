@@ -1,5 +1,5 @@
 import cv2
-
+import logger
 
 def Gray(image):
     """
@@ -13,6 +13,5 @@ def Gray(image):
 
     except cv2.error:
         print("Image not found")
-
-
+        logger.log("Image not found")
         return None

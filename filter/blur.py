@@ -20,4 +20,5 @@ def Blur(image, kernel_size):
 
         except cv2.error as e:
             print("Image not found")
+            logger.log("Image not found")
             return None

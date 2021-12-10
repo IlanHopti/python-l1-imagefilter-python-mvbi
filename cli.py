@@ -7,14 +7,10 @@ from filter.blur import Blur
 from filter.grayscale import Gray
 from filter.gif_conversion import Gif
 from filter.video_capture import VideoCapture
-
-import configparser
+import logger
 import cv2
 import os
-
-from color_text import color_text
-
-import logger
+from filter.FilterZeTeam import color_text
 
 
 arguments = {}
@@ -26,9 +22,10 @@ def Start():
     else it will start the program
     search for filters in arguments and apply them
     save the processed image in the output file
-
     """
+
     list = os.listdir("img")
+
     try:
         for img in list:
             if not img.endswith(('.jpg', '.png', '.jpeg')):
@@ -54,22 +51,17 @@ def Start():
 
 
                 if "FilterZeTeam" in arguments:
-                    image = cv2.putText(image, "Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian",
-                                        org=(10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35,
-                                        color=(0, 0, 255), thickness=1)
+                    image = color_text(image, 'Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian')
                     logger.log("Application of FilterZeTeam ")
 
-
-
-                if "ColorText" in arguments:
-                    image = color_text(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian')
 
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
                 logger.log("Image successfully saved to " + output_dir)
+
     except NameError:
         print('Input or output directory not found')
-
+        logger.log("Input or output directory not found")
 
 args = sys.argv
 
@@ -101,13 +93,11 @@ for i, a in enumerate(args):
 
     elif a == '-i' or a == '--input-dir':
         input_dir = args[i + 1]
-        # mettre input_dir dans img du main
-        print(input_dir)
+        # Initialized input directory
 
     elif a == '-o' or a == '--output-dir':
         output_dir = args[i + 1]
-        # mettre output_dir dans le fichier output du main
-        print(output_dir)
+        # Initialized output directory
 
     # elif a == '--config-file':
     #     configuration = configparser.ConfigParser()
@@ -149,7 +139,7 @@ for i, a in enumerate(args):
             if sublist[0] == 'blur': print(sublist[0] + " : Add a blurred filter to your images, value need to be odd and <0")
             elif sublist[0] == 'dilate': print(sublist[0] + " : Add a dilated filter to your images")
             elif sublist[0] == 'grayscale': print(sublist[0] + " : Add a black and white filtered filter to your images")
-            # elif sublist[0] == 'dilate': print(sublist[0] + " test2")
+            elif sublist[0] == 'FilterZeTeam': print(sublist[0] + " : Add team's Name")
 
 
     elif a == '-s' or a == '--start':

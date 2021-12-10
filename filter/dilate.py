@@ -18,6 +18,7 @@ def Dilate(image, size):
 
     except cv2.error:
         print("Image not found")
+        logger.log("Image not found")
 
         return None
 

@@ -18,3 +18,4 @@ def dump_log():
             print(f.read())
     except FileNotFoundError as e:
         print(f"fichier cannot open {log_file}. error={e}")
+        log(f"fichier cannot open {log_file}. error={e}")
