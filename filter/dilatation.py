@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import logger
 
 
 def Dilate(image, size):

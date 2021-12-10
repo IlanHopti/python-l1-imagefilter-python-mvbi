@@ -1,4 +1,5 @@
 import cv2
+import logger
 
 def Blur(image, kernel_size):
     """
@@ -9,7 +10,7 @@ def Blur(image, kernel_size):
     """
 
     if  (kernel_size[0] % 2) == 0 and (kernel_size[1] % 2) == 0 or (kernel_size[0] <= 0 and kernel_size[0] <= 0):
-        print("The configuration of blur is invalid")
+        print("Blur value is not odd ")
 
     else:
 
