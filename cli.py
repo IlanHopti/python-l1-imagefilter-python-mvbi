@@ -80,13 +80,16 @@ for i, a in enumerate(args):
     """
 
     if a == '-h' or a == '--help':
-        print("usage: imagefilter\n"
-              "-h, --help :\n"
-              "-i,--input-dir <directory>\n"
-              "-o,--output-dir <directory>\n"
-              "-s,--start\n"
-              "--filter <parameter>\n"
-              "--list-filters\n")
+        print("Usage: imagefilter -->\n"
+              "-h, --help                   : To show all commands \n"
+              "-i, --input-dir <directory>  : To set your directory where your images are \n"
+              "-o, --output-dir <directory> : To set your directory where your modified images will be saved \n"
+              "--gif                        : To convert your images to a gif \n"
+              "--frame                      : To convert a video into a frame \n"
+              "--list-filters               : To show the list of available filters \n"
+              "--filter <\"parameter\">       : To chose your filters \n"
+              "-s, --start                  : To run the function which add your selected filters on your images \n")
+
 
     elif a == '-i' or a == '--input-dir':
         input_dir = args[i + 1]
@@ -106,7 +109,7 @@ for i, a in enumerate(args):
     #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
     #     print(configuration)
 
-    elif a == '-gif':
+    elif a == '--gif':
         Gif()
         logger.log("Convert images to gif")
 
@@ -135,7 +138,11 @@ for i, a in enumerate(args):
         print("Available filters:")
         function_list = inspect.getmembers(filter, inspect.ismodule)
         for sublist in function_list:
-                print(sublist[0])
+            # print(sublist[0])
+            if sublist[0] == 'blur': print(sublist[0] + " : Add a blurred filter to your images, value need to be odd and <0")
+            elif sublist[0] == 'dilate': print(sublist[0] + " : Add a dilated filter to your images")
+            elif sublist[0] == 'grayscale': print(sublist[0] + " : Add a black and white filtered filter to your images")
+            # elif sublist[0] == 'dilate': print(sublist[0] + " test2")
 
     elif a == '-s' or a == '--start':
         Start()
