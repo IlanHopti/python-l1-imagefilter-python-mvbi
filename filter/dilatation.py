@@ -8,7 +8,6 @@ def Dilate(image, size):
         kernel = np.ones(size, 'uint8')
 
         dilate_img = cv2.dilate(image, kernel, iterations=1)
-        logger.log("Application of dilatation filter")
         return dilate_img
 
     except cv2.error:
