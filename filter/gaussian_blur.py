@@ -1,19 +1,16 @@
 import cv2
-
 import logger
 
+def Blur(image, kernel_size):
 
-def Blur(image):
-    ksize1 = 9
-    ksize2 = 9
-
-    if  (ksize1 and ksize2 % 2) == 0 or ksize1 and ksize2 < 0:
-        print("The configuration of blur is invalid")
+    if  (kernel_size[0] % 2) == 0 and (kernel_size[1] % 2) == 0 or (kernel_size[0] <= 0 and kernel_size[0] <= 0):
+        print("Blur value is not odd ")
 
     else:
 
         try:
-            dst = cv2.GaussianBlur(image, (ksize1, ksize2), cv2.BORDER_DEFAULT)
+
+            dst = cv2.GaussianBlur(image, kernel_size, cv2.BORDER_DEFAULT)
             logger.log("Application of Blur filter ")
             return dst
 
