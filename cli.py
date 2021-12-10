@@ -8,11 +8,8 @@ import cv2
 import os
 
 
-arguments = {
-    # "filter": "",
-}
+arguments = {}
 
-# arguments["filter"] = 1
 
 def Start():
     list = os.listdir("img")
@@ -23,25 +20,28 @@ def Start():
             else:
                 img_path = f'{input_dir}/{img}'
                 image = cv2.imread(img_path)
-                # image = Gray(image)
-                # image = Dilatation(image)
-                # image = Blur(image)
 
                 if "blur" in arguments:
-                    print("ya blur")
                     image = Blur(image, (arguments["blur"], arguments["blur"]))
                     if image is None:
-                        print("The configuration of blur is invalid")
+                        # print("Blur value is not odd ")
                         break
+                    print("Blur applied ")
+
                 if "grayscale" in arguments:
-                    print("ya grayscale")
+                    print("Grayscale applied ")
                     image = Gray(image)
 
                 if "dilate" in arguments:
-                    print("ya dilate")
+                    print("Dilate applied ")
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
 
-                image = cv2.putText(image, 'Emmanuel Macron', org=(50, 50), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0, 0, 255), thickness=3)
+                if "FilterZeTeam" in arguments:
+                    print("FilterZeTeam applied ")
+                    image = cv2.putText(image, "Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian",
+                                        org=(10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.35,
+                                        color=(0, 0, 255), thickness=1)
+
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
                 # print(" Image successfully uploaded")
@@ -76,11 +76,13 @@ for i, a in enumerate(args):
         for param in params:
             param = param.split(':')
 
-            if param[0] == "grayscale":
-                arguments[param[0]]=0
+            if param[0] == "grayscale" or param[0] == "FilterZeTeam" :
+                arguments[param[0]] = 0
+
             else:
                 arguments[param[0]] = int(param[1])
             # print(arguments)
+
 
 
 
