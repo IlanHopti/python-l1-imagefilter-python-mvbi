@@ -11,7 +11,11 @@ from filter.video_capture import VideoCapture
 import configparser
 import cv2
 import os
+
+from color_text import color_text
+
 import logger
+
 
 arguments = {}
 
@@ -55,6 +59,10 @@ def Start():
                                         color=(0, 0, 255), thickness=1)
                     logger.log("Application of FilterZeTeam ")
 
+
+
+                if "ColorText" in arguments:
+                    image = color_text(image, 'Baptiste Dumoulin, Ilan Petiot, Maxime Nicolas et Vahe Krikorian')
 
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
@@ -126,7 +134,6 @@ for i, a in enumerate(args):
         for param in params:
             param = param.split(':')
 
-
             if param[0] == "grayscale" or param[0] == "FilterZeTeam":
                 arguments[param[0]] = 0
 
@@ -143,6 +150,7 @@ for i, a in enumerate(args):
             elif sublist[0] == 'dilate': print(sublist[0] + " : Add a dilated filter to your images")
             elif sublist[0] == 'grayscale': print(sublist[0] + " : Add a black and white filtered filter to your images")
             # elif sublist[0] == 'dilate': print(sublist[0] + " test2")
+
 
     elif a == '-s' or a == '--start':
         Start()
