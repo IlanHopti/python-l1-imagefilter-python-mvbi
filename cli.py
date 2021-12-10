@@ -4,6 +4,7 @@ from filter.dilatation import Dilate
 from filter.gaussian_blur import Blur
 from filter.grayscale import Gray
 from filter.video_capture import VideoCapture
+import configparser
 import cv2
 import os
 import logger
@@ -70,6 +71,15 @@ for i, a in enumerate(args):
         output_dir = args[i + 1]
         # mettre output_dir dans le fichier output du main
         print(output_dir)
+
+    # elif a == '--config-file':
+    #     configuration = configparser.ConfigParser()
+    #     config = args[i + 1]
+    #     configuration.read(config)
+    #
+    #     input_dir = configuration["DEFAULT_CONFIG"]["inputdir"]
+    #     print(configuration)
+
 
     elif a == "--frame":
         params = args[i + 1].split('=')
