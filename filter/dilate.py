@@ -11,7 +11,7 @@ def Dilate(image, size):
     :return: returns the dilated image, if the image is not found, returns None.
     """
 
-    if size[0] <= 0 and size[0] <= 0:
+    if size[0] <= 0 and size[0] <= 0: # if the size is not valid
         print("Blur value is not odd ")
     else:
 
@@ -20,10 +20,7 @@ def Dilate(image, size):
             dilate_img = cv2.dilate(image, kernel, iterations=1)
             return dilate_img
 
-        except cv2.error:
+        except cv2.error: # if the image is not found return None
             print("Image not found")
             logger.log("Image not found")
-
             return None
-
-

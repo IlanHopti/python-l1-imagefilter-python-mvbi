@@ -13,7 +13,7 @@ def color_text(img,txt):
     :return:  colored text
     """
 
-    color = colors.to_hex('blue')
+    color = colors.to_hex('blue') 
     colorText = ImageColor.getcolor(color, 'RGB')
     org = (10, 25)
     fontface = cv2.FONT_HERSHEY_SIMPLEX
