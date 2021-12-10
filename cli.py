@@ -7,13 +7,17 @@ from filter.grayscale import Gray
 import cv2
 import os
 
-
 arguments = {}
 
 
 def Start():
     """
     Start the program
+    If it's not a .jpg a .png or a .jpeg file stop the program
+    else it will start the program
+    search for filters in arguments and apply them
+    save the processed image in the output file
+
     """
     list = os.listdir("img")
     try:
@@ -41,8 +45,6 @@ def Start():
                     print("ya dilate")
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
 
-
-
                 output = f'{output_dir}/{img}'
                 cv2.imwrite(output, image)
                 # print(" Image successfully uploaded")
@@ -50,10 +52,20 @@ def Start():
         print('Input or output directory not found')
 
 
-
 args = sys.argv
 
 for i, a in enumerate(args):
+    """
+    when help is requested, print the help message
+    when i is requested, print the input directory
+    when o is requested, print the output directory
+    the user can choose the filters he wants to apply
+    and can parameterize them
+    if he requested a filter that doesn't exist, print an error message
+    if he requested a filter that exists, save the filter in the dictionary
+    if he requested s or start, start the function "Start"
+    
+    """
 
     if a == '-h' or a == '--help':
         print("usage: imagefilter\n"
@@ -78,7 +90,7 @@ for i, a in enumerate(args):
             param = param.split(':')
 
             if param[0] == "grayscale":
-                arguments[param[0]]=0
+                arguments[param[0]] = 0
             else:
                 arguments[param[0]] = int(param[1])
             # print(arguments)
@@ -87,9 +99,3 @@ for i, a in enumerate(args):
 
     elif a == '-s' or a == '--start':
         Start()
-
-
-
-
-
-
