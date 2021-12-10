@@ -1,5 +1,7 @@
+import inspect
 import sys
 from _ast import arguments
+import filter
 
 from filter.dilatation import Dilate
 from filter.gaussian_blur import Blur
@@ -71,7 +73,10 @@ for i, a in enumerate(args):
         print("usage: imagefilter\n"
               "-h, --help :\n"
               "-i,--input-dir <directory>\n"
-              "-o,--output-dir <directory>\n")
+              "-o,--output-dir <directory>\n"
+              "-s,--start\n"
+              "--filter <parameter>\n"
+              "--list-filters\n")
 
     elif a == '-i' or a == '--input-dir':
         input_dir = args[i + 1]
@@ -93,9 +98,12 @@ for i, a in enumerate(args):
                 arguments[param[0]] = 0
             else:
                 arguments[param[0]] = int(param[1])
-            # print(arguments)
 
-
+    elif a == '--list-filters':
+        print("Available filters:")
+        function_list = inspect.getmembers(filter, inspect.ismodule)
+        for sublist in function_list:
+                print(sublist[0])
 
     elif a == '-s' or a == '--start':
         Start()
