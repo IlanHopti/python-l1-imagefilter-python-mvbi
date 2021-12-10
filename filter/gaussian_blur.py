@@ -1,5 +1,8 @@
 import cv2
 
+import logger
+
+
 def Blur(image):
     ksize1 = 9
     ksize2 = 9
@@ -11,6 +14,7 @@ def Blur(image):
 
         try:
             dst = cv2.GaussianBlur(image, (ksize1, ksize2), cv2.BORDER_DEFAULT)
+            logger.log("Application of Blur filter ")
             return dst
 
         except cv2.error as e:

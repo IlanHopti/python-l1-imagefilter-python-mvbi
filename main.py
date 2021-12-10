@@ -1,4 +1,4 @@
-
+import logger
 from filter.dilatation import Dilatation
 from filter.gaussian_blur import Blur
 from filter.grayscale import Gray
@@ -21,5 +21,5 @@ for img in list:
 
         output = f'output/{img}'
         cv2.imwrite(output, image)
-
+        logger.log("Applied filter")
         print(" Image successfully uploaded")
