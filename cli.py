@@ -28,7 +28,7 @@ def Start():
 
     try:
         for img in list:
-            if not img.endswith(('.jpg', '.png', '.jpeg')):
+            if not img.endswith(('.jpg', '.png', '.jpeg')): # if it's not a .jpg a .png or a .jpeg file stop the program
                 print(f"{img} is not a jpg, a png or a jpeg file")
                 logger.log(f"{img} is not a jpg, a png or a jpeg file")
 
@@ -36,34 +36,34 @@ def Start():
                 img_path = f'{input_dir}/{img}'
                 image = cv2.imread(img_path)
 
-                if "blur" in arguments:
+                if "blur" in arguments: # if the user want to blur the image
                     image = Blur(image, (arguments["blur"], arguments["blur"]))
-                    if image is None:
+                    if image is None: # if the image is None stop the program
                         logger.log("Blur value is not odd ")
                         break
                     logger.log("Application of Blur filter ")
 
 
-                if "grayscale" in arguments:
+                if "grayscale" in arguments: # if the user want to grayscale the image
                     logger.log("Application of Grayscale filter")
                     image = Gray(image)
 
 
-                if "dilate" in arguments:
+                if "dilate" in arguments: # if the user want to dilate the image
                     image = Dilate(image, (arguments["dilate"], arguments["dilate"]))
-                    if image is None:
+                    if image is None: # if the image is None stop the program
                         logger.log("Blur value is not odd ")
                         break
                     logger.log("Application of dilatation filter")
 
 
-                if "FilterZeTeam" in arguments:
+                if "FilterZeTeam" in arguments: # if the user want to color the image
                     image = color_text(image, 'Baptiste Dumoulin | Ilan Petiot | Maxime Nicolas | Vahe Krikorian')
                     logger.log("Application of FilterZeTeam ")
 
 
                 output = f'{output_dir}/{img}'
-                cv2.imwrite(output, image)
+                cv2.imwrite(output, image) # save the processed image in the output file
                 logger.log("Image successfully saved to " + output_dir)
 
     except NameError:
@@ -88,24 +88,24 @@ for i, a in enumerate(args):
               "-s, --start                  : To run the function which add your selected filters on your images \n")
 
 
-    elif a == '-i' or a == '--input-dir':
+    elif a == '-i' or a == '--input-dir': # To set your directory where your images are
         # Initialized input directory
         input_dir = args[i + 1]
         logger.log(f"Set input to {input_dir}")
 
 
-    elif a == '-o' or a == '--output-dir':
+    elif a == '-o' or a == '--output-dir': # To set your directory where your modified images will be saved
         # Initialized output directory
         output_dir = args[i + 1]
         logger.log(f"Set output to {output_dir}")
 
 
-    elif a == '--gif':
+    elif a == '--gif': # To convert your images to a gif
         Gif()
         logger.log("Convert images to gif")
 
 
-    elif a == "--frame":
+    elif a == "--frame": # To convert a video into a frame
         params = args[i + 1].split('=')
         arguments[params[0]] = params[1]
         VideoCapture(params[1])
@@ -113,7 +113,7 @@ for i, a in enumerate(args):
     #   commande -i video/ -o output/ --frame "--video=videoplayback.mp4"
 
 
-    elif a == '--filter':
+    elif a == '--filter': # To chose your filters
         params = args[i + 1].split('|')
 
         for param in params:
@@ -127,7 +127,7 @@ for i, a in enumerate(args):
     #   commande  exemple: python cli.py -i img/ -o output/ --filter "blur:9|grayscale" -s
 
 
-    elif a == '--list-filters':
+    elif a == '--list-filters': # To show the list of available filters
         print("Available filters:")
         function_list = inspect.getmembers(filter, inspect.ismodule)
         for sublist in function_list:
@@ -138,5 +138,5 @@ for i, a in enumerate(args):
             elif sublist[0] == 'FilterZeTeam': print(sublist[0] + " : Add team's Name")
 
 
-    elif a == '-s' or a == '--start':
+    elif a == '-s' or a == '--start': # To run the function which add your selected filters on your images
         Start()
