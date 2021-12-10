@@ -4,6 +4,12 @@ import logger
 
 
 def Dilate(image, size):
+    """
+    Performs dilation on the image.
+    :param image: url of the image
+    :param size: dilate size
+    :return: returns the dilated image, if the image is not found, returns None.
+    """
     try:
         kernel = np.ones(size, 'uint8')
 
